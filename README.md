@@ -2,7 +2,7 @@
 > Spring Boot 복습을 위해 만든 Repository입니다.
 
 ## 사용 기술
-<img src="https://img.shields.io/badge/Springboot-#6DB33F?style=flat-square&logo=Springboot&logoColor=white">
+<img src="https://img.shields.io/badge/Springboot-6DB33F?style=flat-square&logo=Springboot&logoColor=white">
 
 > Spring Boot3
 > Java 11
