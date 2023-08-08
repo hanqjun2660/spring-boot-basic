@@ -5,7 +5,7 @@
 <img src="https://img.shields.io/badge/Springboot-6DB33F?style=for-the-badge&logo=Springboot&logoColor=white">
 
 > Spring Boot3
-> Java 11
+> Java 17
 > JPA
 > Lombok
 > JavaScript
@@ -19,7 +19,7 @@
 ## 개발 환경 설정
 
 InteliJ IDE
-JDK 11
+JDK 17
 
 ## 정보
 개인적인 학습용도로 사용하는 Repository입니다.
