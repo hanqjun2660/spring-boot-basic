@@ -9,7 +9,6 @@
 > JPA
 > Lombok
 > JavaScript
-> Swagger
 > gradle
 
 ## 사용 예제
@@ -19,7 +18,9 @@
 ## 개발 환경 설정
 
 InteliJ IDE
+Spring Boot 3.1.0
 JDK 17
+H2 Database
 
 ## 정보
 개인적인 학습용도로 사용하는 Repository입니다.
