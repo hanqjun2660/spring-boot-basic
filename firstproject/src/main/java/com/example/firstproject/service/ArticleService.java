@@ -5,9 +5,11 @@ import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ArticleService {
@@ -65,5 +67,25 @@ public class ArticleService {
 
         articleRepository.delete(target);
         return target;
+    }
+
+    @Transactional
+    public List<Article> createArticles(List<ArticleForm> dtos) {
+
+        // DTO 리스트 -> Entity 리스트로 변환
+        List<Article> articleList = dtos.stream() // dtos를 stream화
+                .map(dto -> dto.toEntity())       // map을 사용하여 dto가 하나씩 올때마다 toEntity로 변환
+                .collect(Collectors.toList());    // mapping 완료된것을 List로 묶어 articleList에 최종적으로 저장
+
+        // Entity 묶음을 DB에 저장
+        articleList.stream()
+                .forEach(article -> articleRepository.save(article));
+
+        // 강제 예외 발생
+        articleRepository.findById(-1L)
+                .orElseThrow(() -> new IllegalArgumentException("결제 실패!"));
+
+        // 결과 반환
+        return articleList;
     }
 }

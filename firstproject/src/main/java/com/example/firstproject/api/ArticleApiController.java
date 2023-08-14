@@ -69,4 +69,15 @@ public class ArticleApiController {
         return articleService.show(id);
     }
 
+    @PostMapping("/api/transaction-test")
+    public ResponseEntity<List<Article>> transactionTest(@RequestBody List<ArticleForm> dtos) {
+
+        // 여러개의 게시글을 한번에 등록하자.
+        List<Article> createList = articleService.createArticles(dtos);
+
+        // 여러개의 게시글이 하나라도 생성이 안되면 Bad Request를 반환하자
+        return (createList != null) ? ResponseEntity.status(HttpStatus.OK).body(createList) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+
+    }
+
 }
