@@ -52,22 +52,14 @@ public class ArticleApiController {
 
         return (update != null) ? ResponseEntity.status(HttpStatus.OK).body(update) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
-//
-//    @DeleteMapping("/api/articles/{id}")
-//    public ResponseEntity<Article> delete(@PathVariable long id) {
-//        // 대상 찾기
-//        Article target = articleRepository.findById(id).orElse(null);
-//
-//        // 잘못된 요청 막기
-//        if(target == null || ObjectUtils.isEmpty(target)) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        }
-//
-//        // 대상 삭제
-//        articleRepository.delete(target);
-//        // body(null) 대신 build를 사용해도 body가 비어있는 형태의 ResponseEntity를 생성해서 return할 수 있음.
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
+
+    @DeleteMapping("/api/articles/{id}")
+    public ResponseEntity<Article> delete(@PathVariable long id) {
+
+        Article delete = articleService.delete(id);
+
+        return (delete != null) ? ResponseEntity.status(HttpStatus.OK).body(delete) : ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 
     @GetMapping("/api/articles")
     public List<Article> index() {
