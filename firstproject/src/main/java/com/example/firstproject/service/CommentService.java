@@ -71,4 +71,15 @@ public class CommentService {
         // 댓글 Entity -> DTO 변환
         return CommentDto.createCommentDto(updated);
     }
+
+    @Transactional
+    public CommentDto delete(Long id) {
+        // 댓글 조회 및 예외 발생
+        Comment target = commentRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("댓글 삭제 실패!"));
+        // 댓글 삭제
+        commentRepository.delete(target);
+        // 삭제 댓글 -> DTO 변환 및 반환
+        return CommentDto.createCommentDto(target);
+    }
 }
