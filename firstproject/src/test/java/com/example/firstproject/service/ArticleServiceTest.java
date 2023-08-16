@@ -1,9 +1,11 @@
 package com.example.firstproject.service;
 
+import com.example.firstproject.dto.ArticleForm;
 import com.example.firstproject.entity.Article;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +50,35 @@ class ArticleServiceTest {
         Article expected = null;
         // 실제 데이터
         Article article = articleService.show(id);
+        // 비교 및 검증
+        assertEquals(expected, article);
+    }
+
+    @Test
+    @Transactional  // 데이터를 조회하는 테스트를 제외하고는 트랜잭션으로 묶어 rollback을 해주는 습관을 들이자.
+    void create_성공_tilte과_content만_있는_dto_입력() {
+        // 예상 데이터
+        String title = "라라라라";
+        String content = "4444";
+        ArticleForm dto = new ArticleForm(null, title, content);
+        Article expected = new Article(4L, title, content);
+        // 실제 데이터
+        Article article = articleService.create(dto);
+        // 비교 및 검증
+        assertEquals(expected.toString(), article.toString());
+    }
+
+    @Test
+    @Transactional
+    void create_실패_id가_포함된_dto_입력() {
+        // 예상 데이터
+        Long id = 4L;
+        String title = "라라라라";
+        String content = "4444";
+        ArticleForm dto = new ArticleForm(id, title, content);
+        Article expected = null;    // 게시글 생성시 id가 입력된 상태로 들어가면 Service에서 null을 반환하기 때문에 예상 데이터에 null을 넣었다.
+        // 실제 데이터
+        Article article = articleService.create(dto);
         // 비교 및 검증
         assertEquals(expected, article);
     }
