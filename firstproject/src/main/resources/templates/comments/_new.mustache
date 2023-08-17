@@ -1,0 +1,48 @@
+<div class="card m-2" id="comments-new">
+    <div class="card-body">
+        <!--댓글 작성 Form-->
+        <form>
+            <!-- 닉네임 입력 -->
+            <div class="mb-3">
+                <label for="new-comment-nickname" class="form-label">닉네임</label>
+                <input type="text" class="form-control" id="new-comment-nickname" aria-describedby="emailHelp">
+            </div>
+            <!-- 댓글 본문 입력 -->
+            <div class="mb-3">
+                <label for="new-comment-body" class="form-label">내용</label>
+                <textarea class="form-control" id="new-comment-body"></textarea>
+            </div>
+            <!-- 게시글 id 숨겨둔 input -->
+            {{#article}}
+                <input type="hidden" id="new-comment-article-id" value="{{id}}">
+            {{/article}}
+            <!-- 전송 버튼 -->
+            <button type="button" class="btn btn-primary" id="comment-create-btn">작성</button>
+        </form>
+    </div>
+</div>
+<script>
+    const commentCreateBtn = document.querySelector("#comment-create-btn");
+
+    commentCreateBtn.addEventListener("click", function () {
+       const comment = {
+           nickname : document.querySelector("#new-comment-nickname").value,
+           body : document.querySelector("#new-comment-body").value,
+           articleId : document.querySelector("#new-comment-article-id").value
+       };
+
+       const url = "/api/articles/" + comment.articleId + "/comments";
+
+       fetch(url, {
+           method: "post",
+           headers: {
+               "Content-Type" : "application/json"
+           },
+           body : JSON.stringify(comment)   // 자바스크립트 객체를 json형태로 변환
+       }). then(response => {
+           const msg = (response.ok) ? "댓글이 등록되었습니다." : "댓글 등록 실패!";
+           alert(msg);
+           window.location.reload();
+       })
+    });
+</script>
